@@ -2,9 +2,10 @@
   "name": "mern-blog-backend",
   "version": "1.0.0",
   "description": "This is the backend side of Bricx Carasco MERN Blog",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "author": "Bricx Carasco",
   "license": "ISC",
