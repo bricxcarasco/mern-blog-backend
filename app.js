@@ -23,6 +23,7 @@ require('./models/post');
 require('./models/category');
 
 app.use(express.json());
+app.use(require('./routes/categories'));
 app.use(require('./routes/posts'));
 
 app.listen(PORT, () => {
