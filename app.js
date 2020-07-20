@@ -19,9 +19,11 @@ mongoose.connection.on('error', (err) => {
     console.log(`MongoDB connection error ${err}`);
 });
 
-app.get('/', (req, res) => {
-    res.send("Hello!");
-});
+require('./models/post');
+require('./models/category');
+
+app.use(express.json());
+app.use(require('./routes/posts'));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
