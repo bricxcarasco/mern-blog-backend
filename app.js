@@ -19,8 +19,8 @@ mongoose.connection.on('error', (err) => {
     console.log(`MongoDB connection error ${err}`);
 });
 
-require('./models/post');
 require('./models/category');
+require('./models/post');
 
 app.use(express.json());
 app.use(require('./routes/categories'));
