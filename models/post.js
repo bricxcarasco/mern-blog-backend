@@ -22,6 +22,8 @@ const post = mongoose.Schema({
         type: ObjectId,
         ref: "Category"
     }
+}, {
+    timestamps: true
 });
 
 mongoose.model('Post', post);
