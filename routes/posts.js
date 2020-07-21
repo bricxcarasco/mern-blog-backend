@@ -55,4 +55,20 @@ router.post('/new-post', (req, res) => {
         });
 });
 
+router.get('/trending-posts', (req, res) => {
+    Post.find()
+        .sort({
+            likes: -1
+        })
+        .populate("category", "_id name")
+        .then((posts) => {
+            res.json({
+                posts
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+});
+
 module.exports = router;

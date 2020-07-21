@@ -14,6 +14,10 @@ const post = mongoose.Schema({
         type: String,
         required: true
     },
+    likes: {
+        type: Number,
+        default: 0
+    },
     category: {
         type: ObjectId,
         ref: "Category"
