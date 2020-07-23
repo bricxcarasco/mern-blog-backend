@@ -19,8 +19,23 @@ router.get('/posts', (req, res) => {
         });
 });
 
+router.get('/featured-post', (req, res) => {
+    Post.find({
+        isFeatured: true
+    })
+    .populate("category", "_id name")
+    .then((posts) => {
+        res.json({
+            posts
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+});
+
 router.post('/new-post', (req, res) => {
-    const { title, description, imageUrl, category } = req.body;
+    const { title, description, imageUrl, category, isFeatured } = req.body;
 
     if (!title || !description || !imageUrl || !category) {
         return res.status(422).json({
@@ -36,6 +51,7 @@ router.post('/new-post', (req, res) => {
                 title,
                 description,
                 imageUrl,
+                isFeatured,
                 category: category_result
             });
         
@@ -72,7 +88,7 @@ router.get('/trending-posts', (req, res) => {
 router.get('/fresh-stories', (req, res) => {
     Post.find()
         .sort('-createdAt')
-        .limit(2)
+        .limit(3)
         .populate('category', '_id name')
         .then((posts) => {
             res.json({
