@@ -17,6 +17,18 @@ router.get('/categories', (req, res) => {
         });
 });
 
+router.get('/category-counts', (req, res) => {
+    Category.count({})
+    .then((categories) => {
+        res.json({
+            categories
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+});
+
 router.post('/new-category', (req, res) => {
     const { name } = req.body;
 
