@@ -6,34 +6,6 @@ const Post = mongoose.model("Post");
 
 const router = express.Router();
 
-router.get('/posts', (req, res) => {
-    Post.find()
-        .populate("category", "_id name")
-        .then((posts) => {
-            res.json({
-                posts
-            });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-});
-
-router.get('/featured-post', (req, res) => {
-    Post.find({
-        isFeatured: true
-    })
-    .populate("category", "_id name")
-    .then((posts) => {
-        res.json({
-            posts
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    });
-});
-
 router.post('/new-post', (req, res) => {
     const { title, description, imageUrl, category, isFeatured } = req.body;
 
@@ -71,10 +43,38 @@ router.post('/new-post', (req, res) => {
         });
 });
 
+router.get('/posts', (req, res) => {
+    Post.find()
+        .populate("category", "_id name")
+        .then((posts) => {
+            res.json({
+                posts
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+});
+
+router.get('/featured-post', (req, res) => {
+    Post.find({
+        isFeatured: true
+    })
+    .populate("category", "_id name")
+    .then((posts) => {
+        res.json({
+            posts
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+});
+
 router.get('/trending-posts', (req, res) => {
     Post.find()
-        .sort('-likes')
         .populate("category", "_id name")
+        .sort('-likes')
         .then((posts) => {
             res.json({
                 posts
