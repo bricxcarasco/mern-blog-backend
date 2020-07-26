@@ -30,4 +30,8 @@ const post = mongoose.Schema({
     timestamps: true
 });
 
+post.index({
+    "$**": "text"
+});
+
 mongoose.model('Post', post);

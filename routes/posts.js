@@ -7,6 +7,28 @@ const Post = mongoose.model("Post");
 const router = express.Router();
 const ObjectId = mongoose.Types.ObjectId;
 
+router.get('/search/:query', (req, res) => {
+    if (!req.params.query) {
+        return res.status(422).json({
+            error: "URL not found"
+        });
+    }
+
+    Post.find({
+        $text: {
+            $search: req.params.query
+        }
+    })
+    .then((posts) => {
+        res.json({
+            posts
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+});
+
 router.post('/new-post', (req, res) => {
     const { title, description, imageUrl, category, isFeatured } = req.body;
 
@@ -60,7 +82,7 @@ router.get('/posts', (req, res) => {
 router.get('/posts/:postId', (req, res) => {
     if (!ObjectId.isValid(req.params.postId)) {
         return res.status(422).json({
-            error: "Invalid URL format"
+            error: "URL not found"
         });
     }
 
@@ -82,7 +104,7 @@ router.get('/posts/:postId', (req, res) => {
 router.get('/posts/category/:categoryId', (req, res) => {
     if (!ObjectId.isValid(req.params.categoryId)) {
         return res.status(422).json({
-            error: "Invalid URL format"
+            error: "URL not found"
         });
     }
 

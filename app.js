@@ -8,7 +8,8 @@ const PORT = process.env.PORT || 5000;
 mongoose.connect(MONGODB_URI, {
     useFindAndModify: false,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 });
 
 mongoose.connection.on('connected', () => {

@@ -54,7 +54,7 @@ router.post('/new-comment', (req, res) => {
 router.get('/comments/:postId', (req, res) => {
     if (!ObjectId.isValid(req.params.postId)) {
         return res.status(422).json({
-            error: "Invalid url format"
+            error: "URL not found"
         });
     }
 
@@ -89,7 +89,7 @@ router.get('/comments/:postId', (req, res) => {
 router.get('/comments-count/:postId', (req, res) => {
     if (!ObjectId.isValid(req.params.postId)) {
         return res.status(422).json({
-            error: "Invalid URL format"
+            error: "URL not found"
         });
     }
 
