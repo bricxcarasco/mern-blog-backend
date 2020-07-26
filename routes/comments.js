@@ -86,4 +86,24 @@ router.get('/comments/:postId', (req, res) => {
     });
 });
 
+router.get('/comments-count/:postId', (req, res) => {
+    if (!ObjectId.isValid(req.params.postId)) {
+        return res.status(422).json({
+            error: "Invalid URL format"
+        });
+    }
+
+    Comment.countDocuments({
+        post: req.params.postId
+    })
+    .then((commentCounts) => {
+        res.json({
+            comments: commentCounts
+        })
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+});
+
 module.exports = router;

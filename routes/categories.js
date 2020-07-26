@@ -18,7 +18,7 @@ router.get('/categories', (req, res) => {
 });
 
 router.get('/category-counts', (req, res) => {
-    Category.count({})
+    Category.countDocuments({})
     .then((categories) => {
         res.json({
             categories
