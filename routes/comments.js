@@ -21,8 +21,8 @@ router.post('/new-comment', (req, res) => {
         _id: post
     })
     .populate('post', '_id title')
-    .then((post) => {
-        if (!post) {
+    .then((checkPost) => {
+        if (!checkPost) {
             return res.status(422).json({
                 error: "Post not found"
             });

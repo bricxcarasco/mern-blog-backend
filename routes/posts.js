@@ -5,6 +5,7 @@ const Category = mongoose.model("Category");
 const Post = mongoose.model("Post");
 
 const router = express.Router();
+const ObjectId = mongoose.Types.ObjectId;
 
 router.post('/new-post', (req, res) => {
     const { title, description, imageUrl, category, isFeatured } = req.body;
@@ -55,6 +56,28 @@ router.get('/posts', (req, res) => {
             console.log(error);
         });
 });
+
+router.get('/posts/category/:categoryId', (req, res) => {
+    if (!ObjectId.isValid(req.params.categoryId)) {
+        return res.status(422).json({
+            error: "Invalid URL format"
+        });
+    }
+
+    Post.find({
+        category: req.params.categoryId
+    })
+    .sort('-createdAt')
+    .populate('category', '_id name')
+    .then((posts) => {
+        res.json({
+            posts
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+}); 
 
 router.get('/featured-post', (req, res) => {
     Post.find({
