@@ -57,6 +57,28 @@ router.get('/posts', (req, res) => {
         });
 });
 
+router.get('/posts/:postId', (req, res) => {
+    if (!ObjectId.isValid(req.params.postId)) {
+        return res.status(422).json({
+            error: "Invalid URL format"
+        });
+    }
+
+    Post.findById(req.params.postId)
+        .populate("category", "_id name")
+        .then((post) => {
+            if (!post) {
+                return res.status(404).json({
+                    error: "Post not found"
+                });
+            }
+            res.json(post);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+});
+
 router.get('/posts/category/:categoryId', (req, res) => {
     if (!ObjectId.isValid(req.params.categoryId)) {
         return res.status(422).json({
